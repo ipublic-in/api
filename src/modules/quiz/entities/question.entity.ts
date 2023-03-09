@@ -13,12 +13,12 @@ import { CommonEntity } from '../../../common/entities/CommonEntity.entity';
 
 @Entity('questions')
 export class Question extends CommonEntity {
-  // @ApiProperty({
-  //   description: 'The primary ID of question.',
-  //   example: 1,
-  // })
-  // @PrimaryGeneratedColumn()
-  // id: number;
+  @ApiProperty({
+    description: 'The primary ID of question.',
+    example: 1,
+  })
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({
     description: 'The actual question',

@@ -1,25 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { UserRegisterRequestDto } from './dto/user-register.req.dto';
-import { User } from './user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
-  async doUserRegistration(
-    userRegister: UserRegisterRequestDto,
-  ): Promise<User> {
-    const user = new User();
-    user.name = userRegister.name;
-    user.email = userRegister.email;
-    user.password = userRegister.password;
-
-    return await user.save();
+  create(createUserDto: CreateUserDto) {
+    return 'This action adds a new user';
   }
 
-  async getUserByEmail(email: string): Promise<User | undefined> {
-    return User.findOne({ where: { email } });
+  findAll() {
+    return `This action returns all user`;
   }
 
-  async getUserById(id: number): Promise<User | undefined> {
-    return User.findOne({ where: { id } });
+  findOne(id: number) {
+    return `This action returns a #${id} user`;
+  }
+
+  update(id: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${id} user`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} user`;
   }
 }

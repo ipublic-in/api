@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRatingDto } from './dto/create-rating.dto';
-import { UpdateRatingDto } from './dto/update-rating.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Rating } from './../rating/entities/rating.entity';
 
 @Injectable()
 export class RatingService {
-  create(createRatingDto: CreateRatingDto) {
-    return 'This action adds a new rating';
+  constructor(
+    @InjectRepository(Rating)
+    private readonly ratingRepository: Repository<Rating>,
+  ) {}
+
+  async findAll(): Promise<Rating[]> {
+    return this.ratingRepository.find({
+      relations: ['media', 'user'],
+    });
   }
 
-  findAll() {
-    return `This action returns all rating`;
+  async findOne(id: number): Promise<Rating> {
+    return this.ratingRepository.findOne(id, {
+      relations: ['media', 'user'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} rating`;
+  async create(rating: Rating): Promise<Rating> {
+    return this.ratingRepository.save(rating);
   }
 
-  update(id: number, updateRatingDto: UpdateRatingDto) {
-    return `This action updates a #${id} rating`;
+  async update(id: number, rating: Rating): Promise<Rating> {
+    const existingRating = await this.findOne(id);
+    if (!existingRating) {
+      throw new Error('Rating not found');
+    }
+    rating.id = id;
+    return this.ratingRepository.save(rating);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} rating`;
+  async delete(id: number): Promise<void> {
+    await this.ratingRepository.delete(id);
   }
 }

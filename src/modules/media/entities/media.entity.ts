@@ -33,7 +33,7 @@ export class Media {
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
-  @ManyToOne(() => Creator, (creator) => creator.media)
+  @ManyToOne(() => Creator, (creator) => creator.creations)
   @JoinColumn({ name: 'creator_id' })
   creator: Creator;
 

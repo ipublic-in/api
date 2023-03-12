@@ -1,9 +1,15 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Media } from '../../media/entities/media.entity';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
-export class Transaction {
+export class Transaction extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

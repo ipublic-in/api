@@ -1,9 +1,15 @@
-import { User } from 'src/modules/user/entities/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  BaseEntity,
+} from 'typeorm';
+import { User } from '../../user/entities/user.entity';
 import { Media } from '../../media/entities/media.entity';
 
 @Entity()
-export class Creator {
+export class Creator extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -35,5 +41,5 @@ export class Creator {
   creations: Media[];
 
   @OneToMany(() => User, (user) => user.creators)
-  user: Media[];
+  user: User[];
 }

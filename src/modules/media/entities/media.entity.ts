@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   Entity,
   JoinColumn,
@@ -13,7 +14,7 @@ import { Review } from '../../review/entities/review.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
 
 @Entity()
-export class Media {
+export class Media extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -1,11 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  BaseEntity,
+} from 'typeorm';
 import { Rating } from '../../rating/entities/rating.entity';
 import { Review } from '../../review/entities/review.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
 import { Creator } from '../../creator/entities/creator.entity';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

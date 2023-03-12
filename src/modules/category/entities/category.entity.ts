@@ -9,6 +9,9 @@ import { Media } from '../../media/entities/media.entity';
 
 @Entity()
 export class Category extends BaseEntity {
+  static categories(categories: any): Category {
+    throw new Error('Method not implemented.');
+  }
   @PrimaryGeneratedColumn()
   id: number;
 

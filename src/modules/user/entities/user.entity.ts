@@ -9,6 +9,7 @@ import { Rating } from '../../rating/entities/rating.entity';
 import { Review } from '../../review/entities/review.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
 import { Creator } from '../../creator/entities/creator.entity';
+import { OneToOne } from 'typeorm/decorator/relations/OneToOne';
 
 @Entity()
 export class User extends BaseEntity {
@@ -33,6 +34,6 @@ export class User extends BaseEntity {
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   transactions: Transaction[];
 
-  @OneToMany(() => Creator, (creator) => creator.user)
-  creators: Creator[];
+  @OneToOne(() => Creator, (creator) => creator.user)
+  creator: Creator;
 }

@@ -3,13 +3,18 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
+  OneToOne,
   BaseEntity,
+  JoinColumn,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Media } from '../../media/entities/media.entity';
 
 @Entity()
 export class Creator extends BaseEntity {
+  static creators(creators: any): Creator {
+    throw new Error('Method not implemented.');
+  }
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -40,6 +45,7 @@ export class Creator extends BaseEntity {
   @OneToMany(() => Media, (media) => media.creator)
   creations: Media[];
 
-  @OneToMany(() => User, (user) => user.creators)
-  user: User[];
+  @OneToOne(() => User, (user) => user.creator)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

@@ -1,43 +1,26 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { EventEmitterModule } from '@nestjs/event-emitter';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ApiTokenCheckMiddleware } from './common/middleware/api-token-check.middleware';
-import { typeOrmAsyncConfig } from './config/typeorm.config';
-import { CategoryModule } from './modules/category/category.module';
-import { CreatorModule } from './modules/creator/creator.module';
-import { MediaModule } from './modules/media/media.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
-import { RatingModule } from './modules/rating/rating.module';
-import { ReviewModule } from './modules/review/review.module';
-import { TransactionModule } from './modules/transaction/transaction.module';
+
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
-    EventEmitterModule.forRoot(),
-    CategoryModule,
-    CreatorModule,
-    MediaModule,
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'redhat',
+      database: 'buffer',
+      autoLoadEntities: true,
+      synchronize: true,
+      migrations: ['src/migration/*.ts'],
+      migrationsTableName: 'migration_version',
+    }),
     UserModule,
-    RatingModule,
-    ReviewModule,
-    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ApiTokenCheckMiddleware)
-      .forRoutes({ path: '/', method: RequestMethod.ALL });
-  }
-}
+export class AppModule {}

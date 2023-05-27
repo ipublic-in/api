@@ -1,39 +1,54 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  BaseEntity,
-} from 'typeorm';
-import { Rating } from '../../rating/entities/rating.entity';
-import { Review } from '../../review/entities/review.entity';
-import { Transaction } from '../../transaction/entities/transaction.entity';
-import { Creator } from '../../creator/entities/creator.entity';
-import { OneToOne } from 'typeorm/decorator/relations/OneToOne';
+import { ApiProperty, ApiTags } from "@nestjs/swagger";
+import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity()
+@ApiTags('user')
+@Entity('user')
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @ApiProperty({
+        description: 'The id of the user',
+        example: 1,
+    })
+    @PrimaryColumn({
+        type: 'int',
+        generated: true,
+        unsigned: true,
+        name: 'id',
+    })
+    id: number;
+    
+    @ApiProperty({
+        description: 'The name of the user',
+        example: 'John Doe',
+    })
+    @Column({
+        type: 'varchar',
+        length: 255,
+        nullable: false,
+        name: 'name',
+    })
+    name: string;
 
-  @Column({ length: 100 })
-  name: string;
+    @ApiProperty({
+        description: 'The email of the user',
+        example: 'bob@example.com',
+    })
+    @Column({
+        type: 'varchar',
+        length: 255,
+        nullable: false,
+        name: 'email',
+    })
+    email: string;
 
-  @Column({ length: 100, unique: true })
-  email: string;
-
-  @Column()
-  password: string;
-
-  @OneToMany(() => Rating, (rating) => rating.user)
-  ratings: Rating[];
-
-  @OneToMany(() => Review, (review) => review.user)
-  reviews: Review[];
-
-  @OneToMany(() => Transaction, (transaction) => transaction.user)
-  transactions: Transaction[];
-
-  @OneToOne(() => Creator, (creator) => creator.user)
-  creator: Creator;
+    @ApiProperty({
+        description: 'The password of the user',
+        example: 'password',
+    })
+    @Column({
+        type: 'varchar',
+        length: 255,
+        nullable: false,
+        name: 'password',
+    })
+    password: string;
 }

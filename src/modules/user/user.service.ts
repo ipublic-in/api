@@ -1,43 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
-  ) {}
-
   create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create(createUserDto);
-    return this.userRepository.save(user);
+    return 'This action adds a new user';
   }
 
   findAll() {
-    return this.userRepository.find();
+    return `This action returns all user`;
   }
 
   findOne(id: number) {
-    return this.userRepository.findOne(id);
+    return `This action returns a #${id} user`;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.userRepository.findOne(id);
-    if (!user) {
-      throw new Error(`User with id ${id} not found`);
-    }
-    const updatedUser = Object.assign(user, updateUserDto);
-    return this.userRepository.save(updatedUser);
+  update(id: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${id} user`;
   }
 
-  async delete(id: number) {
-    const user = await this.userRepository.findOne(id);
-    if (!user) {
-      throw new Error(`User with id ${id} not found`);
-    }
-    await this.userRepository.delete(user);
+  remove(id: number) {
+    return `This action removes a #${id} user`;
   }
 }

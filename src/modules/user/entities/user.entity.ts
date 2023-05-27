@@ -51,4 +51,15 @@ export class User extends BaseEntity {
         name: 'password',
     })
     password: string;
+
+    @ApiProperty({
+        description: 'Date of birth',
+        example: '1990-01-01',
+    })
+    @Column({
+        type: 'date',
+        nullable: true,
+        name: 'dob',
+    })
+    dob: Date;
 }

@@ -3,21 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
+import { dataSourceOptions } from 'db/data-source';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'redhat',
-      database: 'buffer',
-      autoLoadEntities: true,
-      synchronize: true,
-      migrations: ['src/migration/*.ts'],
-      migrationsTableName: 'migration_version',
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
   ],
   controllers: [AppController],
